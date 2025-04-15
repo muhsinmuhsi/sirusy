@@ -5,14 +5,14 @@ import image1 from '../assets/image1.jpg'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { CheckSquare,  LockKeyhole, Phone } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate=useNavigate()
 
   useEffect(()=>{
     AOS.init({
       duration:800,
-      
-      
     })
   },[])
 
@@ -44,7 +44,9 @@ const Home = () => {
       {/* imageSlider */}
       <ImageSlider/>
       
-      <button data-aos="fade-up" className='bg-black text-white font-serif p-2 rounded-md  m-3 mt-5'>shop now </button>
+      <button data-aos="fade-up"
+      onClick={()=>navigate('/products')}
+       className='bg-black text-white font-serif p-2 rounded-md  m-3 mt-5'>shop now </button>
       <div className=''>
         <h1 data-aos="fade-up" className='text-3xl sm:text-5xl  font-serif font-bold mt-14 mb-5' >shop by category </h1>
         <div className='flex gap-10 overflow-x-auto scrollbar-none'>
@@ -101,7 +103,7 @@ const Home = () => {
         placeholder="Enter your email"
         className="w-full rounded-full border border-black h-11 px-4 pr-28"
       />
-      <button data-aos="fade-up" className="absolute right-1 top-1 bg-green-300 hover:bg-green-600 text-white rounded-full px-4 py-2 text-sm transition-colors duration-300">
+      <button data-aos="fade-up" className="absolute right-1 top-1 bg-black hover:bg-gray-600 text-white rounded-full px-4 py-2 text-sm transition-colors duration-300">
         Subscribe
       </button>
     </div>

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Menu, X, Instagram } from 'lucide-react';
+import { Menu, X, Instagram, ShoppingCart } from 'lucide-react';
 import Logo from '../assets/sirusyLogo.jpg'
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const Navigate=useNavigate()
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'Shop', href: '#' },
+    { name: 'Home', href: '/' },
+    { name: 'Shop', href: '/products' },
     { name: 'About Us', href: '#' },
   ];
 
@@ -31,7 +33,10 @@ const Navbar = () => {
         {/* Right - Icons */}
         <div className="flex items-center gap-4">
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-            <Instagram size={20} className="text-gray-700 hover:text-pink-600" />
+            <Instagram size={20} className="text-gray-400 hover:text-pink-600" />
+          </a>
+          <a onClick={()=>Navigate('/cart')} target="_blank" rel="noopener noreferrer">
+             <ShoppingCart className='text-gray-400 hover:text-white'/>
           </a>
 
           {/* Mobile Menu Icon */}
