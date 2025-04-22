@@ -1,43 +1,9 @@
-import React, { useState } from 'react';
-import image from '../assets/image1.jpg'
+import React, { useContext } from 'react';
+import { CartContext } from '../components/CartContext'; // adjust path
+import { LucideTrash2 } from 'lucide-react';
 
 const CartPage = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      title: 'Minimal Hoodie',
-      details: '100% Cotton, Black',
-      price: 799,
-      quantity: 1,
-      image: image ,
-    },
-    {
-      id: 2,
-      title: 'Classic Sneakers',
-      details: 'White Edition, Size 9',
-      price: 1299,
-      quantity: 2,
-      image: 'https://via.placeholder.com/150?text=Sneakers',
-    },
-  ]);
-
-  const increment = (id) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
-
-  const decrement = (id) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
+  const { cartItems, updateQuantity,removeFromCart } = useContext(CartContext);
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -64,24 +30,30 @@ const CartPage = () => {
               <p className="mt-2 font-bold">₹{item.price}</p>
               <div className="flex items-center gap-2 mt-2">
                 <button
-                  onClick={() => decrement(item.id)}
+                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
                   className="px-2 py-1 bg-white text-black rounded"
                 >
                   -
                 </button>
                 <span>{item.quantity}</span>
                 <button
-                  onClick={() => increment(item.id)}
+                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
                   className="px-2 py-1 bg-white text-black rounded"
                 >
                   +
                 </button>
               </div>
             </div>
-            <div className="text-right">
+            <div className="text-right flex flex-col justify-between">
               <p className="font-semibold">
                 ₹{item.price * item.quantity}
               </p>
+
+              <button className='border border-white rounded p-1 hover:bg-gray-700'
+              onClick={()=>removeFromCart(item._id)}
+              >
+                <LucideTrash2/>
+              </button>
             </div>
           </div>
         ))}
