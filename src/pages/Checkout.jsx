@@ -1,19 +1,21 @@
-import React, { useState, useContext } from 'react';
-import { CartContext } from '../components/CartContext';
-import PaymentOptions from '../components/PaymentOptions';
-import api from '../api';
+import React, { useState, useContext } from "react";
+import { CartContext } from "../components/CartContext";
+import PaymentOptions from "../components/PaymentOptions";
+import api from "../api";
+import toast from "react-hot-toast";
+const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
 
 const CheckoutPage = () => {
-  const { cartItems } = useContext(CartContext);
-  const [paymentMethod, setPaymentMethod] = useState('razorpay');
+  const { checkoutItems, clearCart } = useContext(CartContext);
+  const [paymentMethod, setPaymentMethod] = useState("razorpay");
   const [shippingInfo, setShippingInfo] = useState({
-    name: '',
-    email: '',
-    address: '',
-    phone: '',
+    name: "",
+    email: "",
+    address: "",
+    phone: "",
   });
 
-  const totalPrice = cartItems.reduce(
+  const totalPrice = checkoutItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
@@ -26,18 +28,54 @@ const CheckoutPage = () => {
     setShippingInfo({ ...shippingInfo, [e.target.name]: e.target.value });
   };
 
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
   const handleCheckout = async () => {
-    if (paymentMethod === 'razorpay') {
+    const { name, email, address, phone } = shippingInfo;
+    if (!name || !email || !address || !phone) {
+      toast.error("Please fill out all shipping information fields.");
+      return;
+    }
+
+    if (paymentMethod === "razorpay") {
+      const isLoaded = await loadRazorpayScript();
+      if (!isLoaded) {
+        alert("Razorpay SDK failed to load. Please refresh the page.");
+        return;
+      }
+
       try {
-        const { data } = await api.post('/payment', { cartItems, totalPrice });
+        const { data } = await api.post("/payment", {
+          checkoutItems,
+          totalPrice,
+        });
         const options = {
+          key: razorpayKey,
           amount: data.amount,
           currency: data.currency,
-          name: "Your Store",
+          name: "Siruzy",
           description: "Test Transaction",
           order_id: data.id,
           handler: async (response) => {
-            await api.post('/payment/verify', response);
+            await api.post("/payment/verify", {
+              response,
+              checkoutItems,
+              totalPrice,
+              shippingInfo,
+            });
+            clearCart();
             alert("Payment Successful");
           },
           prefill: {
@@ -46,17 +84,15 @@ const CheckoutPage = () => {
             contact: shippingInfo.phone,
           },
         };
-        if (typeof window.Razorpay !== "undefined") {
-            const rzp = new window.Razorpay(options);
-            rzp.open();
-          } else {
-            alert("Razorpay SDK failed to load. Please refresh the page.");
-          }
+        const rzp = new window.Razorpay(options);
+        rzp.open();
       } catch (err) {
         console.error("Error creating order", err);
+        clearCart();
         alert("Failed to initiate payment");
       }
     } else {
+      clearCart();
       alert("Cash on Delivery selected. Order confirmed!");
     }
   };
@@ -65,7 +101,6 @@ const CheckoutPage = () => {
     <div className="min-h-screen flex flex-col items-center bg-gray-100 p-4">
       <h2 className="text-4xl font-bold font-serif mb-8">Checkout</h2>
       <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
-        
         {/* Shipping Information */}
         <div>
           <h3 className="text-2xl font-semibold mb-4">Shipping Information</h3>
@@ -108,13 +143,18 @@ const CheckoutPage = () => {
         <div>
           <h3 className="text-2xl font-semibold mb-4">Review Your Order</h3>
           <div className="space-y-4 max-h-64 overflow-y-auto pr-2">
-            {cartItems.map((item) => (
-              <div key={item.id} className="flex justify-between items-center border-b pb-2">
+            {checkoutItems.map((item) => (
+              <div
+                key={item.id}
+                className="flex justify-between items-center border-b pb-2"
+              >
                 <div>
                   <h4 className="font-medium">{item.title}</h4>
                   <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
                 </div>
-                <p className="text-right font-medium">₹{item.price * item.quantity}</p>
+                <p className="text-right font-medium">
+                  ₹{item.price * item.quantity}
+                </p>
               </div>
             ))}
           </div>
@@ -125,14 +165,16 @@ const CheckoutPage = () => {
           </div>
 
           <div className="mt-4">
-            <PaymentOptions handlePaymentMethodChange={handlePaymentMethodChange} />
+            <PaymentOptions
+              handlePaymentMethodChange={handlePaymentMethodChange}
+            />
           </div>
 
           <button
             onClick={handleCheckout}
             className="mt-6 w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
           >
-            {paymentMethod === 'razorpay' ? 'Pay Now' : 'Confirm Order (COD)'}
+            {paymentMethod === "razorpay" ? "Pay Now" : "Confirm Order (COD)"}
           </button>
         </div>
       </div>

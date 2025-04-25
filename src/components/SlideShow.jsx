@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import image1 from '../assets/image1.jpg'
+import api from '../api';
 
 const OfferSlider = () => {
+  const [bannerImage, setBannerImage] = useState([]);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -15,32 +17,29 @@ const OfferSlider = () => {
     autoplaySpeed: 3000,
   };
 
-  const offers = [
-    {
-      id: 1,
-      image: image1,
-      alt: 'Summer Sale 50% Off',
-    },
-    {
-      id: 2,
-      image: image1,
-      alt: 'Free Shipping on Orders Over $50',
-    },
-    {
-      id: 3,
-      image: '/offers/new-arrivals.jpg',
-      alt: 'New Arrivals - Shop Now',
-    },
-  ];
+  useEffect(() => {
+    const fetchBannerImages = async () => {
+      try {
+        const res = await api.get('/bannerImage');
+        setBannerImage(res.data.data); // Make sure your API returns an array of image URLs or objects with image field
+      } catch (error) {
+        console.error('Failed to fetch Images:', error);
+      }
+    };
+
+    fetchBannerImages();
+  }, []); // ✅ Empty dependency to avoid infinite re-renders
+
+  
 
   return (
     <div className="max-w-full mx-auto px-5 py-4">
       <Slider {...settings}>
-        {offers.map((offer) => (
-          <div key={offer.id} className="outline-none">
-            <img 
-              src={offer.image} 
-              alt={offer.alt}
+        {bannerImage.map((img, index) => (
+          <div key={img._id || index} className="outline-none">
+            <img
+              src={img.image || img.url} // ✅ Adjust according to your backend response field name
+              alt={`Banner ${index + 1}`}
               className="w-full h-64 md:h-96 object-cover rounded-lg"
             />
           </div>

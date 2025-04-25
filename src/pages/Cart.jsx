@@ -3,7 +3,7 @@ import { CartContext } from '../components/CartContext'; // adjust path
 import { LucideTrash2 } from 'lucide-react';
 
 const CartPage = () => {
-  const { cartItems, updateQuantity,removeFromCart } = useContext(CartContext);
+  const { cartItems, updateQuantity,removeFromCart,buyCartItems } = useContext(CartContext);
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -60,10 +60,15 @@ const CartPage = () => {
       </div>
 
       {/* Total Price */}
-      <div className="mt-6 p-4 border-t border-white flex justify-between text-lg font-bold">
-        <span>Total:</span>
-        <span>₹{totalPrice}</span>
-      </div>
+      <div className="mt-10 border-t border-white pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-2xl font-bold">Total: ₹{totalPrice}</p>
+            <button
+              onClick={() =>buyCartItems()}
+              className="bg-white text-black font-bold px-6 py-3 rounded-xl hover:bg-gray-200 transition w-full sm:w-auto"
+            >
+              Proceed to Checkout
+            </button>
+          </div>
     </div>
   );
 };

@@ -1,63 +1,73 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ImageSlider from '../components/SlideShow'
 import Footer from '../components/Footer'
-import image1 from '../assets/image1.jpg'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { CheckSquare,  LockKeyhole, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import api from '../api';
 
 const Home = () => {
-  const navigate=useNavigate()
+  const [categories, setCategories] = useState([])
+  const navigate = useNavigate()
 
-  useEffect(()=>{
-    AOS.init({
-      duration:800,
-    })
-  },[])
+  useEffect(() => {
+    AOS.init({ duration: 800 })
 
+    // Fetch categories from backend
+    const fetchCategories = async () => {
+      try {
+        const res = await api.get('/category') 
+        setCategories(res.data.data)
+      } catch (error) {
+        console.error('Failed to fetch categories:', error)
+      }
+    }
 
-  const offers = [
-      {
-        id: 1,
-        image: image1,
-        alt: 'Summer Sale 50% Off',
-      },
-      {
-        id: 2,
-        image: image1,
-        alt: 'Free Shipping on Orders Over $50',
-      },
-      {
-        id: 3,
-        image: '/offers/new-arrivals.jpg',
-        alt: 'New Arrivals - Shop Now',
-      },
-      {
-        id: 2,
-        image: image1,
-        alt: 'Free Shipping on Orders Over $50',
-      },
-    ];
+    fetchCategories()
+  }, [])
+
   return (
     <div className='m-3'>
-      {/* imageSlider */}
-      <ImageSlider/>
-      
-      <button data-aos="fade-up"
-      onClick={()=>navigate('/products')}
-       className='bg-black text-white font-serif p-2 rounded-md  m-3 mt-5'>shop now </button>
-      <div className=''>
-        <h1 data-aos="fade-up" className='text-3xl sm:text-5xl  font-serif font-bold mt-14 mb-5' >shop by category </h1>
-        <div className='flex gap-10 overflow-x-auto scrollbar-none'>
-          {
-            offers.map((image)=>(
-              <img data-aos="fade-up" className='w-96 h-60 object-fill border border-gray-400 rounded-sm' src={image.image} alt={image.alt} />
-            ))
-          }
+      <ImageSlider />
 
-        </div>
+      <button
+        data-aos="fade-up"
+        onClick={() => navigate('/products')}
+        className='bg-black text-white font-serif p-2 rounded-md m-3 mt-5'>
+        Shop Now
+      </button>
+
+      <div>
+        <h1 data-aos="fade-up" className='text-3xl sm:text-5xl font-serif font-bold mt-14 mb-5'>
+          Shop by Category
+        </h1>
+
+        <div className='flex gap-5 overflow-x-auto scrollbar-none'>
+  {categories?.map((cat) => (
+    <div
+      key={cat._id}
+      data-aos="fade-up"
+      onClick={() => navigate(`/products/${cat.category}`)}
+      className="relative w-80 h-52 flex-shrink-0 cursor-pointer rounded-md overflow-hidden group"
+    >
+      {/* Image */}
+      <img
+        src={cat.image}
+        alt={cat.alt || cat.category}
+        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <h2 className="text-white text-2xl font-semibold font-serif">{cat.category}</h2>
       </div>
+    </div>
+  ))}
+</div>
+
+      </div>
+
 
       <div>
         {/* why choose us */}

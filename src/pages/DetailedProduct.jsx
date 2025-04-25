@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CartContext } from '../components/CartContext';
 import api from '../api';
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { addToCart } = useContext(CartContext);
+  const { addToCart,buyNowSingleProduct } = useContext(CartContext);
 
-  const navigate=useNavigate()
 
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
@@ -76,7 +75,9 @@ const ProductDetails = () => {
           Add to Cart
         </button>
         <button className="bg-black hover:bg-gray-700 text-white font-semibold py-2 rounded-lg w-full" 
-        onClick={()=>navigate('/checkout')}
+        onClick={() => {
+          buyNowSingleProduct(product);
+        }}
         >
           Buy Now
         </button>

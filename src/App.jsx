@@ -7,14 +7,38 @@ import DetailedProduct from './pages/DetailedProduct'
 import { CartProvider } from './components/CartContext'
 import CartPage from './pages/Cart'
 import CheckoutPage from './pages/Checkout'
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
   return (
     <>
     <div>
-      <CartProvider>
+      
       <BrowserRouter>
+      <CartProvider>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            background: '#fff',   // white background
+            color: '#000',        // black text
+          },
+          success: {
+            iconTheme: {
+              primary: '#000', // tick (check) background
+              secondary: '#fff', // tick (check) color
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ff4d4f', // optional: red error icon background
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}/>
@@ -24,9 +48,8 @@ function App() {
         <Route path='/checkout' element={<CheckoutPage/>}/>
 
       </Routes>
-      </BrowserRouter>
       </CartProvider>
-      
+      </BrowserRouter>
     </div>
 
     </>
