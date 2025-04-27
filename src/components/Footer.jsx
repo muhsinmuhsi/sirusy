@@ -1,7 +1,9 @@
 import React from 'react';
-import { Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Linkedin, Lock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+  const navigate=useNavigate()
   return (
     <footer className="bg-gray-100 text-gray-700 py-6 mt-10 shadow-inner">
       <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
@@ -24,6 +26,7 @@ const Footer = () => {
           <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <Linkedin className="h-5 w-5 hover:text-blue-700 transition" />
           </a>
+          <button onClick={()=>navigate('/admin/Login')}><Lock size={15}/></button>
         </div>
       </div>
     </footer>

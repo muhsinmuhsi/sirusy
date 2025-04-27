@@ -1,13 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Home from './pages/Home'
-import Navbar from './components/Navbar'
-import Products from './pages/Products'
-import DetailedProduct from './pages/DetailedProduct'
 import { CartProvider } from './components/CartContext'
-import CartPage from './pages/Cart'
-import CheckoutPage from './pages/Checkout'
 import { Toaster } from 'react-hot-toast';
+import ProductRoutes from './routes/porductRoutes'
+import AdminRoutes from './routes/adminRoutes'
 
 function App() {
 
@@ -39,14 +35,9 @@ function App() {
           },
         }}
       />
-      <Navbar/>
       <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/products' element={<Products/>}/>
-        <Route path='/product/:id' element={<DetailedProduct/>}/>
-        <Route path='/cart' element={<CartPage/>}/>
-        <Route path='/checkout' element={<CheckoutPage/>}/>
-
+      <Route path="/*" element={<ProductRoutes/>}/>
+      <Route path="/admin/*" element={<AdminRoutes/>} />
       </Routes>
       </CartProvider>
       </BrowserRouter>
