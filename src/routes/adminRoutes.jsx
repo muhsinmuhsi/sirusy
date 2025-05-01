@@ -1,12 +1,11 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast'
 import AdminLogin from '../pages/Admin/Login'
 import AdminProtected from '../components/Admin/adminProtected'
 import AdminHome from '../pages/Admin/AdminHome'
 import AddProduct from '../pages/Admin/AddProducts'
 import ProductEdit from '../pages/Admin/EditProducts'
-import ManageProducts from '../pages/Admin/manageProducts'
+import ManageProducts from '../pages/Admin/ManageProducts'
 import AdminNavbar from '../components/Admin/AdminNavbar'
 import AddBannerImage from '../pages/Admin/AddBannerImage'
 
