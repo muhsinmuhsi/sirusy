@@ -20,7 +20,11 @@ const CartPage = () => {
             className="flex gap-4 p-4 border border-white rounded-xl"
           >
             <img
-              src={item.image}
+              src={
+                item.images && item.images.length > 0
+                  ? item.images[0]
+                  : "https://via.placeholder.com/150"
+              }
               alt={item.title}
               className="w-24 h-24 object-cover rounded"
             />

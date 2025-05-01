@@ -81,6 +81,16 @@ const ProductEdit = () => {
       console.error("Update error", err);
       toast.error('Update error')
     });
+
+    setFormData({
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+    quantity: "",
+    existingImages: [],
+    newImages: [],
+    })
   };
 
   return (

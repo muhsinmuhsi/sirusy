@@ -56,6 +56,15 @@ const AddProduct = () => {
     }
     toast.success('product added');
     console.log("Form submitted!", formData);
+    setFormData({
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+    quantity: "",
+    images: [],
+
+    })
   };
 
   return (

@@ -3,6 +3,7 @@ import { CartContext } from "../components/CartContext";
 import PaymentOptions from "../components/PaymentOptions";
 import api from "../api";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
 
 const CheckoutPage = () => {
@@ -15,6 +16,7 @@ const CheckoutPage = () => {
     phone: "",
   });
 
+  const navigate=useNavigate()
   const totalPrice = checkoutItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -57,7 +59,16 @@ const CheckoutPage = () => {
       }
 
       try {
-        const { data } = await api.post("/payment", {
+        setShippingInfo({
+           name: "",
+           email: "",
+           address: "",
+           phone: "",
+          });
+        const confirmPay = window.confirm("Are you sure? This process may not be undone!");
+
+        if(confirmPay){
+          const { data } = await api.post("/payment", {
           checkoutItems,
           totalPrice,
         });
@@ -74,9 +85,13 @@ const CheckoutPage = () => {
               checkoutItems,
               totalPrice,
               shippingInfo,
+              paymentMethod
             });
             clearCart();
             alert("Payment Successful");
+
+            navigate('/');
+            
           },
           prefill: {
             name: shippingInfo.name,
@@ -86,14 +101,43 @@ const CheckoutPage = () => {
         };
         const rzp = new window.Razorpay(options);
         rzp.open();
+        }
+        
       } catch (err) {
         console.error("Error creating order", err);
         clearCart();
         alert("Failed to initiate payment");
       }
     } else {
-      clearCart();
-      alert("Cash on Delivery selected. Order confirmed!");
+      setShippingInfo({
+        name: "",
+        email: "",
+        address: "",
+        phone: "",
+       });
+      const confirmOrder = window.confirm("Are you sure? This process may not be undone!");
+      if (confirmOrder) {
+        try {
+          await api.post("/sendEmail", {
+            checkoutItems,
+            totalPrice,
+            shippingInfo,
+            paymentMethod,
+          });
+      
+          clearCart(); // remove await here
+      
+          toast.success("Cash on Delivery selected. Order confirmed! Confirmation email sent.");
+          console.log("Cart cleared and toast shown");
+          setTimeout(() => {
+            navigate("/");
+          }, 500); // delay to ensure state is flushed
+
+        } catch (error) {
+          console.error("Error sending COD confirmation email:", error);
+          toast.error("Order placed but failed to send confirmation email.");
+        }
+      }
     }
   };
 

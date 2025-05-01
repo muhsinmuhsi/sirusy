@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Instagram, ShoppingCart } from 'lucide-react';
+import { Menu, X, Instagram, ShoppingCart, Search } from 'lucide-react';
 import Logo from '../assets/sirusyLogo.jpg'
 import { useNavigate } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Shop', href: '/products' },
-    { name: 'About Us', href: '#' },
+    { name: 'About Us', href: '/AboutUs' },
   ];
 
   return (
@@ -32,7 +32,10 @@ const Navbar = () => {
 
         {/* Right - Icons */}
         <div className="flex items-center gap-4">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <button onClick={()=>Navigate('/products')} >
+            <Search className="text-gray-400 hover:text-white"/>
+            </button>
+          <a href="https://www.instagram.com/siru.sy/?__pwa=1" target="_blank" rel="noopener noreferrer">
             <Instagram size={20} className="text-gray-400 hover:text-pink-600" />
           </a>
           <a onClick={()=>Navigate('/cart')} target="_blank" rel="noopener noreferrer">

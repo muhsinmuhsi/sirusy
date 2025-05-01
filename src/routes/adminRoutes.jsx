@@ -8,6 +8,7 @@ import AddProduct from '../pages/Admin/AddProducts'
 import ProductEdit from '../pages/Admin/EditProducts'
 import ManageProducts from '../pages/Admin/manageProducts'
 import AdminNavbar from '../components/Admin/AdminNavbar'
+import AddBannerImage from '../pages/Admin/AddBannerImage'
 
 const AdminRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AdminRoutes = () => {
                 <Route path='/AddProducts' element={<AdminProtected><AddProduct/></AdminProtected>}/>
                 <Route path='/EditProducts/:id' element={<AdminProtected><ProductEdit/></AdminProtected>}/>
                 <Route path='/MangeProducts' element={<AdminProtected><ManageProducts/></AdminProtected>}/>
+                <Route path='/AddBannerImage' element={<AdminProtected><AddBannerImage/></AdminProtected>}/>
               </Routes>
     </div>
   )
