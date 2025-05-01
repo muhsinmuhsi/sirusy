@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const adminApi= axios.create({
-    baseURL: "http://localhost:8080/api/admin",
+    baseURL: "https://backend-wq7c.onrender.com/api/admin",
     withCredentials:true,
 })
 

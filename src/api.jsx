@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
    
-    baseURL: "http://localhost:8080/api",
+    baseURL: "https://backend-wq7c.onrender.com/api",
     withCredentials: true,
 
 });
