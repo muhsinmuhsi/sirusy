@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">1. Collection of Personally Identifiable Information</h2>
       <p className="mb-4">
-        We collect personally identifiable information (email address, name, phone number, etc.) from you when you set up a free account with Komart. 
+        We collect personally identifiable information (email address, name, phone number, etc.) from you when you set up a free account with Sirusy. 
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">2. Use of Demographic / Profile Data / Your Information</h2>
@@ -26,7 +26,7 @@ const PrivacyPolicy = () => {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">4. Links to Other Sites</h2>
       <p className="mb-4">
-        Our site links to other websites that may collect personally identifiable information about you. Komart is not responsible for the privacy practices of such websites.
+        Our site links to other websites that may collect personally identifiable information about you. Sirusy is not responsible for the privacy practices of such websites.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">5. Security Precautions</h2>
@@ -36,7 +36,7 @@ const PrivacyPolicy = () => {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">6. Choice/Opt-Out</h2>
       <p className="mb-4">
-        Komart provides all users with the opportunity to opt-out of receiving non-essential communications after setting up an account.
+        Sirusy provides all users with the opportunity to opt-out of receiving non-essential communications after setting up an account.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">7. Questions?</h2>

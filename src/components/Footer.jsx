@@ -31,7 +31,7 @@ const Footer = () => {
       <div className="mb-6">
         <h2 className="text-base font-semibold mb-2">Useful Links</h2>
         <ul className="space-y-1 text-gray-700">
-          <li><a href="">About us</a></li>
+          <li><a onClick={()=>navigate('/AboutUs')} href="">About us</a></li>
           <li onClick={()=>navigate('/Privacy-Policy')}><a href="">Privacy Policy</a></li>
           <li>Terms and Conditions</li>
           <li>Refund & Return Policy</li>
