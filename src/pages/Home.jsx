@@ -19,13 +19,13 @@ import Kids from '../assets/KidsImages.jpg'
 const dummyCategories = [
   {
     _id: '1',
-    category: ' Beauty & Personal Care ',
+    category: 'Beauty & Personal Care',
     image: beauty,
     alt: ' Beauty & Personal Care ',
   },
   {
     _id: '2',
-    category: ' Home & Kitchen',
+    category: 'Home & Kitchen',
     image: Kitchen,
     alt: ' Home & Kitchen',
   },
@@ -72,7 +72,7 @@ const dummyCategories = [
     alt: "Kid's",
   },
 ];
-
+  
 
 const Home = () => {
   const [categories, setCategories] = useState([])
