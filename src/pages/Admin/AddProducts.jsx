@@ -111,14 +111,23 @@ const AddProduct = () => {
 
             <div>
               <label className="block mb-2 text-gray-600">Category</label>
-              <input 
-                type="text"
+              <select
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
                 className="w-full p-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required
-              />
+              >
+                <option value="" disabled>
+                  Select a category
+                </option>
+                <option value="Beauty">Beauty</option>
+                <option value="Kitchen">Kitchen</option>
+                <option value="Health">Health</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Hobbies">Hobbies</option>
+              </select>
             </div>
 
             <div>

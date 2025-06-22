@@ -6,3 +6,4 @@ const adminApi= axios.create({
 })
 
 export default adminApi
+//"http://localhost:8080/api/admin"
