@@ -37,7 +37,7 @@ const ProductDetails = () => {
         <img
           src={selectedImage}
           alt="Main product"
-          className="w-full h-64 object-cover rounded-xl border"
+          className="w-full h-64 object-contain rounded-xl border"
         />
         {product.images && (
           <div className="flex gap-2 mt-2 overflow-x-auto">
@@ -47,7 +47,7 @@ const ProductDetails = () => {
                 src={img}
                 alt={`Thumbnail ${idx + 1}`}
                 onClick={() => setSelectedImage(img)}
-                className={`w-16 h-16 object-cover rounded-md border cursor-pointer ${
+                className={`w-16 h-16 object-fill rounded-md border cursor-pointer ${
                   selectedImage === img ? 'ring-2 ring-blue-500' : ''
                 }`}
               />

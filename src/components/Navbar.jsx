@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, Instagram, ShoppingCart, Search } from 'lucide-react';
 import Logo from '../assets/sirusyLogo.jpg'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,9 +24,9 @@ const Navbar = () => {
         {/* Middle - Desktop Links */}
         <div className="hidden md:flex gap-6 text-gray-400 font-medium">
           {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className="hover:text-white transition">
+            <Link key={link.name} to={link.href} className="hover:text-white transition">
               {link.name}
-            </a>
+            </Link>
           ))}
         </div>
 

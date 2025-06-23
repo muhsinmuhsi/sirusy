@@ -14,6 +14,7 @@ import Hobbies from '../assets/HobbiesImages.jpg'
 import Mens from '../assets/Mens.jpg'
 import Women from '../assets/girlsImage.jpg'
 import Kids from '../assets/KidsImages.jpg'
+import MKIS from '../assets/mkis.jpg'
 
 
 const dummyCategories = [
@@ -70,6 +71,12 @@ const dummyCategories = [
     category: "Kid's",
     image: Kids,
     alt: "Kid's",
+  },
+  {
+    _id: '10',
+    category: "MKIS",
+    image: MKIS,
+    alt: "mkis",
   },
 ];
   

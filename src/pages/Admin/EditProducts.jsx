@@ -138,14 +138,27 @@ const ProductEdit = () => {
 
             <div>
               <label className="block mb-2 text-gray-600">Category</label>
-              <input 
-                type="text"
+              <select
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
                 className="w-full p-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required
-              />
+              >
+                <option value="" disabled>
+                  Select a category
+                </option>
+                <option value="Beauty & Personal Care">Beauty & Personal Care</option>
+                <option value="Home & Kitchen">Home & Kitchen</option>
+                <option value="Health & Fitness">Health & Fitness</option>
+                <option value="Fashion & Lifestyle">Fashion & Lifestyle</option>
+                <option value="Electronics & Accessories">Electronics & Accessories</option>
+                <option value="Hobbies & Essentials">Hobbies & Essentials</option>
+                <option value="Men's">Men's</option>
+                <option value="Women's">Women's</option>
+                <option value="Kid's">Kid's</option>
+                <option value="Kid's">MKIS</option>
+              </select>
             </div>
 
             <div>
