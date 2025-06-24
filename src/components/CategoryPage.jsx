@@ -45,7 +45,7 @@ const CategoryPage = () => {
                       ? product.images[0]
                       : "https://via.placeholder.com/150"
                   } alt={product.name} className="w-full h-48 object-contain rounded-md" />
-              <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
+              <h2 className="text-lg font-semibold mt-2">{product.title}</h2>
               <p className="text-gray-600 text-sm">{product.description}</p>
               <p className="font-bold mt-2">₹{product.price}</p>
             </div>
