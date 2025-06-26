@@ -125,7 +125,7 @@ const CheckoutPage = () => {
             paymentMethod,
           });
       
-          clearCart(); // remove await here
+          clearCart(); 
       
           toast.success("Cash on Delivery selected. Order confirmed! Confirmation email sent.");
           console.log("Cart cleared and toast shown");
